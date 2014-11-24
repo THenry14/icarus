@@ -73,6 +73,14 @@ module.exports = function (grunt) {
       },
       dist: {},
       server: {}
+    },
+    mochaTest: {
+      test: {
+        options: {
+          reporter: 'spec'
+        },
+        src: ['test/**/*.js']
+      }
     }
   });
   grunt.registerTask('build', [
@@ -82,6 +90,6 @@ module.exports = function (grunt) {
     'htmlmin',
     'cssmin:generated',
     'uglify:generated',
-    'filerev','usemin']);
-  grunt.registerTask('test', ['jshint']);
+    'filerev', 'usemin']);
+  grunt.registerTask('test', ['jshint', 'mochaTest']);
 };
