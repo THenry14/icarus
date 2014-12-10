@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var expressValidator = require('express-validator');
 var passwordless = require('passwordless');
 var MongoStore = require('passwordless-mongostore');
 var email = require('emailjs');
@@ -35,6 +36,12 @@ var app = express();
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(expressValidator());
+expressValidator.validator.extend('toLowerCase',
+  function (str) {
+    return str.toLowerCase();
+  }
+);
 app.use(passwordless.acceptToken());
 
 app.use('/', express.static(path.join(__dirname, 'public')));
