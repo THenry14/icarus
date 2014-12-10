@@ -26,19 +26,20 @@ router.post('/reqtoken',
         else if (user) {
           callback(null, user.id);
         }
-      });
-      var newUser = new User({email: email});
-      newUser.save(function (err) {
-        if (err) {
-          console.log(err);
-          callback(err.toString());
-        } else {
-          callback(null, user);
-          console.log('New user');
+        else {
+          var newUser = new User({email: email});
+          newUser.save(function (err) {
+            if (err) {
+              console.log(err);
+              callback(err.toString());
+            } else {
+              callback(null, user.id);
+              console.log('New user');
+            }
+          });
         }
       });
-    }
-  ),
+    }),
   function (req, res) {
     res.json({msg: 'Login success'});
   }
